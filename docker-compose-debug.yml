@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+
+    marketmanagement:
+        image: marketmanagement
+        build:
+            context: .
+            dockerfile: MarketManagement/Dockerfile        
+        ports:
+            - 8080:80
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+    marketsql:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        environment: 
+            - ACCEPT_EULA=Y
+            - 'SA_PASSWORD=Abcd1234!!!!'
+        ports:
+            - 1433:1433
+            
+    rabbitmq:
+        image: rabbitmq:3.8.7-management
+        ports: 
+            - 15672:15672
+            - 5672:5672
