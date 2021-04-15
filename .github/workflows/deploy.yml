@@ -19,7 +19,7 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore MarketManagement.csproj
     - name: Build
-      run: dotnet build MarketManagement
+      run: dotnet build MarketManagement.csproj
   
