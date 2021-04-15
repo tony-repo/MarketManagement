@@ -22,4 +22,5 @@ jobs:
       run: dotnet restore MarketManagement/MarketManagement.csproj
     - name: Build
       run: dotnet build MarketManagement/MarketManagement.csproj
+    - name: Test
   
