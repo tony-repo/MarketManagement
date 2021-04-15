@@ -1,4 +1,4 @@
-name: .NET
+name: Deploy Market Management
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: Setup Market Management
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
