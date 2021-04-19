@@ -8,6 +8,7 @@ using NSubstitute;
 using Xunit;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Tests.Controllers
 {
@@ -18,7 +19,8 @@ namespace Tests.Controllers
         public UsersTests()
         {
             _usersService = Substitute.For<IUsersService>();
-            _usersController = new UsersController(_usersService);
+            var logger = Substitute.For<ILogger<UsersController>>();
+            _usersController = new UsersController(_usersService, logger);
         }
 
         [Fact]
