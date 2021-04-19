@@ -6,7 +6,7 @@ services:
         image: marketmanagement
         build:
             context: .
-            dockerfile: MarketManagement/Dockerfile        
+            dockerfile: Dockerfile        
         ports:
             - 8080:80
         environment:
