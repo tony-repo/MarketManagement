@@ -9,6 +9,7 @@ using MarketManagement.Model;
 using MarketManagement.Model.Domain;
 using MarketManagement.Model.Dto;
 using MarketManagement.Service;
+using Microsoft.Extensions.Logging;
 
 namespace MarketManagement.Controllers
 {
@@ -17,16 +18,19 @@ namespace MarketManagement.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _usersService;
+        private readonly ILogger _logger;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(IUsersService usersService, ILogger<UsersController> logger)
         {
             _usersService = usersService;
+            _logger = logger;
         }
 
         [HttpGet]
         [Route("ping")]
         public async Task<IActionResult> GetPing()
         {
+            _logger.LogInformation("Get ping successfully");
             return Ok("Success");
         }
 
@@ -48,7 +52,7 @@ namespace MarketManagement.Controllers
         [Route("{userId}")]
         public async Task<IActionResult> GetUser(Guid userId)
         {
-            await Task.Delay(1000); 
+            await Task.Delay(1000);
             return Ok(HttpStatusCode.Accepted);
         }
     }
