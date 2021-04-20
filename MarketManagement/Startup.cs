@@ -17,6 +17,8 @@ namespace MarketManagement
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,6 +30,17 @@ namespace MarketManagement
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUsersService, UsersService>();
+
+            services.AddCors();
+
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(name: MyAllowSpecificOrigins,
+            //        builder =>
+            //        {
+            //            builder.AllowAnyOrigin();
+            //        });
+            //});
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -51,7 +64,12 @@ namespace MarketManagement
             app.UseRouting();
 
             app.UseAuthorization();
-
+   
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

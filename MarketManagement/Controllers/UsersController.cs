@@ -35,6 +35,17 @@ namespace MarketManagement.Controllers
         }
 
         [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login(LoginRequest loginRequest)
+        {
+            _logger.LogInformation("Log in market management");
+
+            var data = loginRequest;
+
+            return Ok("Success for login");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserRequest createUserRequest)
         {
             var user = new User();
