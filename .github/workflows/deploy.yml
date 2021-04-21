@@ -31,8 +31,8 @@ jobs:
     - name: Set up Node.js version
     - uses: actions/setup-node@v1
       with:
-        node-version: '12.x'        
-        working-directory: ./UI/market
+        node-version: '12.x'   
+        path: ./UI/market 
     - name: Installing project dependencies
       run: npm install
     - name: Building the project
