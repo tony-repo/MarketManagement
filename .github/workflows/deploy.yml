@@ -9,11 +9,8 @@ on:
       - main
 
 jobs:
-  build:
-
+  netcorejob:
     runs-on: ubuntu-latest
-    env:
-       working-directory: .
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-dotnet@v1
@@ -25,5 +22,20 @@ jobs:
       run: dotnet build MarketManagement/MarketManagement.csproj
     - name: Test
       run: dotnet test Tests/Tests.csproj
+      
+  uijob:
+    needs: netcorejob
+    runs-on: ubuntu-latest
+    steps:    
+    - uses: actions/checkout@v2
+    - name: Set up Node.js version
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'        
+        working-directory: ./UI/market
+    - name: Installing project dependencies
+      run: npm install
+    - name: Building the project
+      run: npm run build
       
   
