@@ -26,13 +26,14 @@ jobs:
   uijob:
     needs: netcorejob
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./UI/market
     steps:    
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'   
-    - name: Change work directory
-      working-directory: ./UI/market
     - name: Installing project dependencies
       run: npm install
     - name: Building the project
