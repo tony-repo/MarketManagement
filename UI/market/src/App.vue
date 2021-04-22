@@ -1,24 +1,13 @@
 <template>
   <div id="app">
-    <div class="header">
-      <img src="./assets/logo.png" class="logo" alt="logo" />
-    </div>
-    <Login />
-
-    <div class="footer">
-      <div class="version">Version 1.0.1</div>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Login from "./components/Login.vue";
-
 export default {
   name: "App",
-  components: {
-    Login,
-  },
+  components: {},
 };
 </script>
 

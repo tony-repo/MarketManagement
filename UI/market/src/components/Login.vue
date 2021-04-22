@@ -1,49 +1,57 @@
 <template>
-  <div class="login">
-    <el-card>
-      <h2>Login</h2>
-      <el-form
-        class="login-form"
-        :model="model"
-        :rules="rules"
-        ref="form"
-        @submit.native.prevent="login"
-      >
-        <el-form-item prop="username">
-          <el-input
-            v-model="model.username"
-            placeholder="Username"
-            prefix-icon="fas fa-user"
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-            v-model="model.password"
-            placeholder="Password"
-            type="password"
-            prefix-icon="fas fa-lock"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            :loading="loading"
-            class="login-button"
-            type="primary"
-            native-type="submit"
-            block
-            >Login</el-button
-          >
-        </el-form-item>
-        <a class="forgot-password" href="https://oxfordinformatics.com/"
-          >Forgot password ?</a
+  <div>
+    <div class="header">
+      <img src="../assets/logo.png" class="logo" alt="logo" />
+    </div>
+    <div class="login">
+      <el-card>
+        <h2>Login</h2>
+        <el-form
+          class="login-form"
+          :model="model"
+          :rules="rules"
+          ref="form"
+          @submit.native.prevent="login"
         >
-      </el-form>
-    </el-card>
+          <el-form-item prop="username">
+            <el-input
+              v-model="model.username"
+              placeholder="Username"
+              prefix-icon="fas fa-user"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input
+              v-model="model.password"
+              placeholder="Password"
+              type="password"
+              prefix-icon="fas fa-lock"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              :loading="loading"
+              class="login-button"
+              type="primary"
+              native-type="submit"
+              block
+              >Login</el-button
+            >
+          </el-form-item>
+          <a class="forgot-password" href="https://oxfordinformatics.com/"
+            >Forgot password ?</a
+          >
+        </el-form>
+      </el-card>
+    </div>
+    <div class="footer">
+      <div class="version">Version 1.0.1</div>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
 
 export default {
   name: "login",
@@ -84,11 +92,7 @@ export default {
   },
   methods: {
     LoginMarket() {
-      return axios.post("https://localhost:44388/api/Users/login", this.model);
-
-      // return new Promise((resolve) => {
-      //   setTimeout(resolve, 300);
-      // });
+      this.$router.push({ path: "/hello" });
     },
     async login() {
       let valid = await this.$refs.form.validate();
@@ -96,18 +100,8 @@ export default {
         return;
       }
       this.loading = true;
-      var qq = await this.LoginMarket();
-      console.log(qq);
       this.LoginMarket();
       this.loading = false;
-      if (
-        this.model.username === this.validCredentials.username &&
-        this.model.password === this.validCredentials.password
-      ) {
-        this.$message.success("Login successfull");
-      } else {
-        this.$message.error("Username or password is invalid");
-      }
     },
   },
 };
