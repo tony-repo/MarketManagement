@@ -1,7 +1,10 @@
 FROM node:lts-alpine AS publish
-COPY ./ /app
 WORKDIR /app
-RUN npm install && npm run build
+COPY ./package.json /app/
+RUN npm install
+
+COPY . /app/
+RUN npm run build
 
 FROM nginx:stable-alpine
 WORKDIR /app
