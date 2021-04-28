@@ -26,7 +26,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: index.docker.io/tonydockerchn
+        repository: tonydockerchn/market-management
         tag_with_ref: true
       
       
