@@ -22,12 +22,12 @@ jobs:
       run: dotnet build MarketManagement/MarketManagement.csproj
     - name: Test
       run: dotnet test Tests/Tests.csproj
-    - name: Build Image
-      run: docker build -t tonydockerchn/marketmanagement:latest .
     - name: Login to docker 
       run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} index.docker.io
+    - name: Build Image
+      run: docker build -t tonydockerchn/marketmanagement .   
     - name: Push Image 
-      run: docker push tonydockerchn/marketmanagement:latest
+      run: docker push tonydockerchn/marketmanagement
    
   uijob:
     needs: netcorejob
@@ -44,10 +44,10 @@ jobs:
       run: npm install
     - name: Building the project
       run: npm run build
-    - name: Build Image
-      run: docker build -t tonydockerchn/marketui:latest .
     - name: Login to docker 
       run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} index.docker.io
+    - name: Build Image
+      run: docker build -t tonydockerchn/marketui .  
     - name: Push Image 
-      run: docker push tonydockerchn/marketui:latest
+      run: docker push tonydockerchn/marketui
   
