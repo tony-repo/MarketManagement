@@ -25,9 +25,11 @@ jobs:
     - name: Login to docker 
       run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} index.docker.io
     - name: Build Image
-      run: docker build -t tonydockerchn/marketmanagement .   
+      run: docker build -t marketmanagement .
+    - name: Tag Image
+      run: docker tag marketmanagement tonydockerchn/marketmanagement:latest
     - name: Push Image 
-      run: docker push tonydockerchn/marketmanagement
+      run: docker push tonydockerchn/marketmanagement:latest
    
   uijob:
     needs: netcorejob
