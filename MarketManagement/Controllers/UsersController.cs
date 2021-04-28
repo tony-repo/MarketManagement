@@ -5,15 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using MarketManagement.Configuration;
 using MarketManagement.Model;
 using MarketManagement.Model.Domain;
 using MarketManagement.Model.Dto;
 using MarketManagement.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 
 namespace MarketManagement.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -27,6 +29,7 @@ namespace MarketManagement.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("ping")]
         public async Task<IActionResult> GetPing()
         {

@@ -10,21 +10,23 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using MarketManagement.Configuration;
 using MarketManagement.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MarketManagement
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -33,19 +35,63 @@ namespace MarketManagement
 
             services.AddCors();
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(name: MyAllowSpecificOrigins,
-            //        builder =>
-            //        {
-            //            builder.AllowAnyOrigin();
-            //        });
-            //});
+            var rootSection = _configuration.GetSection("MarketManagementOptions");
+            services.Configure<MarketManagementOptions>(rootSection);
 
+            var jwtSettingsSection = _configuration.GetSection("JwtSettingsOptions");
+            services.Configure<JwtSettingOptions>(jwtSettingsSection);
+
+            // Jwt authentication
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(option =>
+                {
+                    // comment it, since if the server is used in internal network, it will need to set to false
+                    //option.RequireHttpsMetadata = false;
+
+                    var setting = _configuration.GetSection("JwtSettingsOptions").Get<JwtSettingOptions>();
+
+                    option.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(setting.SecretKey)),
+                        ValidIssuer = setting.Issuer,
+                        ValidateIssuer = true,
+                        ValidAudience = setting.Audience,
+                        ValidateAudience = false
+                    };
+                });
+
+            services.AddTransient<IJwtTokenService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MarketManagement", Version = "v1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "",
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+
             });
         }
 
@@ -63,13 +109,17 @@ namespace MarketManagement
 
             app.UseRouting();
 
+            // Add jwt
+            app.UseAuthentication();
             app.UseAuthorization();
-   
+
             app.UseCors(x => x
                 .AllowAnyMethod()
                 .AllowAnyHeader()
+                //.AllowAnyOrigin()
                 .SetIsOriginAllowed(origin => true) // allow any origin
                 .AllowCredentials()); // allow credentials
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

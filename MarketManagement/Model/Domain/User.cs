@@ -7,6 +7,7 @@ namespace MarketManagement.Model.Domain
 {
     public class User
     {
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -16,5 +17,7 @@ namespace MarketManagement.Model.Domain
         public string Password { get; set; }
 
         public Guid OrganizationId { get; set; }
+
+        public List<Role> Roles { get; set; }
     }
 }

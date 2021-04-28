@@ -91,8 +91,24 @@ export default {
     };
   },
   methods: {
-    LoginMarket() {
-      this.$router.push({ path: "/hello" });
+    async LoginMarket() {
+      var response = await this.$axios.post("/Authentication/token", {
+        username: this.model.username,
+        password: this.model.password,
+      });
+
+      // save authentication token
+      this.$store.commit("set_token", response.data.jwtToken);
+
+      var ss = await this.$axios.get("/Users/Ping");
+      console.log(ss);
+
+      this.$router.push({
+        path: "/hello",
+        data: {
+          status: "success",
+        },
+      });
     },
     async login() {
       let valid = await this.$refs.form.validate();
@@ -100,7 +116,7 @@ export default {
         return;
       }
       this.loading = true;
-      this.LoginMarket();
+      await this.LoginMarket();
       this.loading = false;
     },
   },
