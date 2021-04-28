@@ -45,7 +45,7 @@ namespace MarketManagement.Service
             return token;
         }
 
-        public Task<string> Create(User user)
+        public async Task<object> Create(User user)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettingOptions.SecretKey));
@@ -90,7 +90,7 @@ namespace MarketManagement.Service
                 Success = true
             };
 
-            _tokens.Add(jwt);
+          //  _tokens.Add(jwt);
 
             return jwt;
         }
