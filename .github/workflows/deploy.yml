@@ -27,9 +27,9 @@ jobs:
     - name: Build Image
       run: docker build -t marketmanagement .
     - name: Tag Image
-      run: docker tag marketmanagement tonydockerchn/marketmanagement:latest
+      run: docker tag marketmanagement tonydockerchn/market-management:latest
     - name: Push Image 
-      run: docker push tonydockerchn/marketmanagement:latest
+      run: docker push tonydockerchn/market-management:latest
    
   uijob:
     needs: netcorejob
