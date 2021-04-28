@@ -46,7 +46,7 @@ jobs:
       run: npm run build
     - uses: docker/build-push-action@v1
       with:
-        file: ./Dockerfile
+        file: ./UI/market/Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: tonydockerchn/market-ui
