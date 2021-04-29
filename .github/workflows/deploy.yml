@@ -9,16 +9,7 @@ on:
       - main
 
 jobs:
-  deployjob:
-    runs-on: ubuntu-latest
-    steps:    
-    - name: Deploy Server
-    - uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.HOST_USERNAME }}
-        password: ${{ secrets.HOST_PASSWORD }}
-        port: ${{ secrets.HOST_PORT }}
+
 
   netcorejob:
     runs-on: ubuntu-latest
