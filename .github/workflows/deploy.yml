@@ -70,20 +70,3 @@ jobs:
         file: ./UI/market/Dockerfile
         push: true
         tags: tonydockerchn/market-ui
-                 
-  deployjob3:
-    needs: uijob
-    runs-on: ubuntu-latest
-    steps:    
-    - name: Deploy Server
-    - uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.HOST_USERNAME }}
-        password: ${{ secrets.HOST_PASSWORD }}
-        port: ${{ secrets.HOST_PORT }}
-    - run: |
-          docker rm -f marketmanagement || true
-          docker run -d --name marketmanagement -p 8088:80 tonydockerchn/market-management
-          docker rm -f marketui || true
-          docker run -d --name marketui -p 8080:80 tonydockerchn/market-ui
