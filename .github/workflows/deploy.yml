@@ -67,3 +67,12 @@ jobs:
         file: ./UI/market/Dockerfile
         push: true
         tags: tonydockerchn/market-ui
+    - uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.HOST_USERNAME }}
+        password: ${{ secrets.HOST_PASSWORD }}
+        port: ${{ secrets.HOST_PORT }}
+        script: |
+          docker rm -f marketui || true
+          docker run -d --name marketui -p 8080:80 tonydockerchn/market-ui
