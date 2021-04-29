@@ -28,6 +28,16 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: tonydockerchn/market-management
         tag_with_ref: true
+    - name: Deploy Server
+    - uses: appleboy/ssh-action@master
+      with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.HOST_USERNAME }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          port: ${{ secrets.HOST_PORT }}
+          script: |
+            docker rm -f marketmanagement || true
+            docker run -d --name marketmanagement -p 8088:80 tonydockerchn/market-management
    
   uijob:
     needs: netcorejob
@@ -57,4 +67,14 @@ jobs:
         file: ./UI/market/Dockerfile
         push: true
         tags: tonydockerchn/market-ui
+    - name: Deploy Vue
+    - uses: appleboy/ssh-action@master
+      with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.HOST_USERNAME }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          port: ${{ secrets.HOST_PORT }}
+          script: |
+            docker rm -f marketui || true
+            docker run -d --name marketui -p 8080:80 tonydockerchn/market-ui
   
