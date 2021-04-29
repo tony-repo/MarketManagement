@@ -9,6 +9,23 @@ on:
       - main
 
 jobs:
+  deployjob:
+    needs: uijob
+    runs-on: ubuntu-latest
+    steps:    
+    - name: Deploy Server
+    - uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.HOST_USERNAME }}
+        password: ${{ secrets.HOST_PASSWORD }}
+        port: ${{ secrets.HOST_PORT }}
+        run: |
+          docker rm -f marketmanagement || true
+          docker run -d --name marketmanagement -p 8088:80 tonydockerchn/market-management
+          docker rm -f marketui || true
+          docker run -d --name marketui -p 8080:80 tonydockerchn/market-ui
+
   netcorejob:
     runs-on: ubuntu-latest
     steps:
@@ -28,17 +45,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: tonydockerchn/market-management
         tag_with_ref: true
-    - name: Deploy Server
-    - uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.HOST_USERNAME }}
-        password: ${{ secrets.HOST_PASSWORD }}
-        port: ${{ secrets.HOST_PORT }}
-        run: |
-          docker rm -f marketmanagement || true
-          docker run -d --name marketmanagement -p 8088:80 tonydockerchn/market-management
-   
+        
   uijob:
     needs: netcorejob
     runs-on: ubuntu-latest
@@ -67,7 +74,12 @@ jobs:
         file: ./UI/market/Dockerfile
         push: true
         tags: tonydockerchn/market-ui
-    - name: Deploy Vue
+                 
+  deployjob3:
+    needs: uijob
+    runs-on: ubuntu-latest
+    steps:    
+    - name: Deploy Server
     - uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -75,6 +87,7 @@ jobs:
         password: ${{ secrets.HOST_PASSWORD }}
         port: ${{ secrets.HOST_PORT }}
         run: |
+          docker rm -f marketmanagement || true
+          docker run -d --name marketmanagement -p 8088:80 tonydockerchn/market-management
           docker rm -f marketui || true
           docker run -d --name marketui -p 8080:80 tonydockerchn/market-ui
-  
