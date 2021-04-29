@@ -31,13 +31,13 @@ jobs:
     - name: Deploy Server
     - uses: appleboy/ssh-action@master
       with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.HOST_USERNAME }}
-          password: ${{ secrets.HOST_PASSWORD }}
-          port: ${{ secrets.HOST_PORT }}
-          script: |
-            docker rm -f marketmanagement || true
-            docker run -d --name marketmanagement -p 8088:80 tonydockerchn/market-management
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.HOST_USERNAME }}
+        password: ${{ secrets.HOST_PASSWORD }}
+        port: ${{ secrets.HOST_PORT }}
+        script: |
+          docker rm -f marketmanagement || true
+          docker run -d --name marketmanagement -p 8088:80 tonydockerchn/market-management
    
   uijob:
     needs: netcorejob
@@ -70,11 +70,11 @@ jobs:
     - name: Deploy Vue
     - uses: appleboy/ssh-action@master
       with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.HOST_USERNAME }}
-          password: ${{ secrets.HOST_PASSWORD }}
-          port: ${{ secrets.HOST_PORT }}
-          script: |
-            docker rm -f marketui || true
-            docker run -d --name marketui -p 8080:80 tonydockerchn/market-ui
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.HOST_USERNAME }}
+        password: ${{ secrets.HOST_PASSWORD }}
+        port: ${{ secrets.HOST_PORT }}
+        script: |
+          docker rm -f marketui || true
+          docker run -d --name marketui -p 8080:80 tonydockerchn/market-ui
   
