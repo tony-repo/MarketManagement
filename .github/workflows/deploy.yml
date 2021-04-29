@@ -20,7 +20,7 @@ jobs:
         username: ${{ secrets.HOST_USERNAME }}
         password: ${{ secrets.HOST_PASSWORD }}
         port: ${{ secrets.HOST_PORT }}
-        run: |
+    - run: |
           docker rm -f marketmanagement || true
           docker run -d --name marketmanagement -p 8088:80 tonydockerchn/market-management
           docker rm -f marketui || true
@@ -86,7 +86,7 @@ jobs:
         username: ${{ secrets.HOST_USERNAME }}
         password: ${{ secrets.HOST_PASSWORD }}
         port: ${{ secrets.HOST_PORT }}
-        run: |
+    - run: |
           docker rm -f marketmanagement || true
           docker run -d --name marketmanagement -p 8088:80 tonydockerchn/market-management
           docker rm -f marketui || true
