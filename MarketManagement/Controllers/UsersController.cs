@@ -37,6 +37,15 @@ namespace MarketManagement.Controllers
             return Ok("Success");
         }
 
+
+        [HttpGet]
+        [Route("testauth")]
+        public async Task<IActionResult> TestAuth()
+        {
+            _logger.LogInformation("Get ping successfully");
+            return Ok("Test auth successfully");
+        }
+
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login(LoginRequest loginRequest)
