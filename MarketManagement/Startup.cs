@@ -60,8 +60,8 @@ namespace MarketManagement
                         ValidateAudience = false
                     };
                 });
-
-            services.AddTransient<IJwtTokenService>();
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IJwtTokenService, JwtTokenService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
