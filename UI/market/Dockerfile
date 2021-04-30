@@ -1,9 +1,9 @@
 FROM node:lts-alpine AS publish
 WORKDIR /app
-COPY ./package.json /app/
+COPY package*.json /app/
 RUN npm install
 
-COPY . /app/
+COPY ./ /app/
 RUN npm run build
 
 FROM nginx:stable-alpine
