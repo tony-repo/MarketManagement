@@ -34,7 +34,7 @@ jobs:
         context: ./
         file: ./Dockerfile
         push: true
-        tags: tonydockerchn/marketmanagement
+        tags: tonydockerchn/market-management
     - uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
