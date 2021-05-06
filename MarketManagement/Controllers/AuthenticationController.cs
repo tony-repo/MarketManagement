@@ -32,7 +32,7 @@ namespace MarketManagement.Controllers
         public async Task<ActionResult> RequestToken(LoginRequest loginRequest)
         {
 
-            if (loginRequest.UserName != "123456" && loginRequest.Password != "123456")
+            if (loginRequest.UserName != "123456" || loginRequest.Password != "123456")
             {
                 return Unauthorized("UserName or Password is not correct.");
             }

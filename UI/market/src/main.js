@@ -32,7 +32,7 @@ const store = new Vuex.Store({
 
 
 // axios
-axios.defaults.baseURL = "https://locahost:8088"
+axios.defaults.baseURL = "http://52.184.88.242:8088"
 Vue.prototype.$axios = axios
 
 axios.interceptors.request.use(config => {
