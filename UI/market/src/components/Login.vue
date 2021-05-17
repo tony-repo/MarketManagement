@@ -5,7 +5,7 @@
     </div>
     <div class="login">
       <el-card>
-        <h2>Login</h2>
+        <h2>{{ $route.params.title }}</h2>
         <el-form
           class="login-form"
           :model="model"
@@ -38,9 +38,15 @@
               >Login</el-button
             >
           </el-form-item>
-          <a class="forgot-password" href="https://oxfordinformatics.com/"
-            >Forgot password ?</a
-          >
+          <el-form-item>
+            <!-- <router-link :to="{ path: '/Login/Jwt Login' }">Jwt</router-link> -->
+            <!-- we will disable it,since currently we just support login by one way
+             <router-link
+              style="margin-left: 30px"
+              :to="{ path: '/Login/Oauth Login' }"
+              >Oauth</router-link
+            > -->
+          </el-form-item>
         </el-form>
       </el-card>
     </div>
@@ -51,8 +57,6 @@
 </template>
 
 <script>
-//import axios from "axios";
-
 export default {
   name: "login",
   data() {
@@ -91,33 +95,44 @@ export default {
     };
   },
   methods: {
-    async LoginMarket() {
-      var response = await this.$axios.post("/Authentication/token", {
-        username: this.model.username,
-        password: this.model.password,
-      });
+    async loginMarketByJwt() {
+      try {
+        var response = await this.$axios.post("/Authentication/token", {
+          username: this.model.username,
+          password: this.model.password,
+        });
 
-      // save authentication token
-      this.$store.commit("set_token", response.data.jwtToken);
+        // save authentication token
+        this.$store.commit("set_token", response.data.jwtToken);
 
-      var ss = await this.$axios.get("/Users/Ping");
-      console.log(ss);
-
-      this.$router.push({
-        path: "/hello",
-        data: {
-          status: "success",
-        },
-      });
+        this.$router.push({
+          path: "/MarketManagement",
+          data: {
+            status: "success",
+          },
+        });
+      } catch (error) {
+        this.$message.error(error);
+      }
+    },
+    async loginMarketByOauth() {
+      console.log("Oauth login");
     },
     async login() {
       let valid = await this.$refs.form.validate();
       if (!valid) {
         return;
       }
-      this.loading = true;
-      await this.LoginMarket();
-      this.loading = false;
+
+      if (this.$route.params.title === "Jwt Login") {
+        this.loading = true;
+        await this.loginMarketByJwt();
+        this.loading = false;
+      } else if (this.$route.params.title === "Oauth Login") {
+        this.loading = true;
+        await this.loginMarketByOauth();
+        this.loading = false;
+      }
     },
   },
 };

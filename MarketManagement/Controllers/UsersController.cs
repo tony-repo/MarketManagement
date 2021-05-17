@@ -28,8 +28,8 @@ namespace MarketManagement.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
         [Authorize]
+        [HttpGet]
         [Route("ping")]
         public async Task<IActionResult> GetPing()
         {

@@ -33,6 +33,7 @@ const store = new Vuex.Store({
 
 // axios
 axios.defaults.baseURL = "http://52.184.88.242:8088"
+//axios.defaults.baseURL = "https://localhost:44388"
 Vue.prototype.$axios = axios
 
 axios.interceptors.request.use(config => {
@@ -53,9 +54,9 @@ axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          this.$store.commit('del_token');
+          store.commit('del_token');
           router.replace({
-            path: '/login',
+            path: '/login/Jwt Login',
             query: { redirect: router.currentRoute.fullPath }// jump up after login successfully
           })
           break;
@@ -66,8 +67,6 @@ axios.interceptors.response.use(
     }
     return Promise.reject(error)
   });
-
-
 
 new Vue({
   render: h => h(App),

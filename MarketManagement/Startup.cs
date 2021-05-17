@@ -46,7 +46,7 @@ namespace MarketManagement
                 .AddJwtBearer(option =>
                 {
                     // comment it, since if the server is used in internal network, it will need to set to false
-                    //option.RequireHttpsMetadata = false;
+                    // option.RequireHttpsMetadata = false;
 
                     var setting = _configuration.GetSection("JwtSettingsOptions").Get<JwtSettingOptions>();
 
@@ -60,6 +60,19 @@ namespace MarketManagement
                         ValidateAudience = false
                     };
                 });
+
+
+            // Oauth Authentication for testing we just use jwt token for authentication
+            //IdentityModelEventSource.ShowPII = true; //Add this line for detail exception
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options =>
+            //    {
+            //        //The url for IdentityServer
+            //        options.Authority = "https://localhost:44302";
+            //        //The ApiResource Name
+            //        options.Audience = "market";
+            //    });
+
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
             services.AddControllers();
