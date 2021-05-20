@@ -7,6 +7,7 @@ using MarketManagement.Service;
 using NSubstitute;
 using Xunit;
 using FluentAssertions;
+using MarketManagement.Model.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
