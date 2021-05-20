@@ -41,10 +41,11 @@ jobs:
         username: ${{ secrets.HOST_USERNAME }}
         password: ${{ secrets.HOST_PASSWORD }}
         port: ${{ secrets.HOST_PORT }}
-        script: |          
+        script: |  
+          docker network create marketnet || true
           docker rm -f marketmanagement || true
           docker pull tonydockerchn/market-management:latest
-          docker run -d --name marketmanagement -p 8088:80 tonydockerchn/market-management
+          docker run -d --name marketmanagement -p 8088:80 --network marketnet --network-alias marketmanagement tonydockerchn/market-management
 
         
   uijob:
