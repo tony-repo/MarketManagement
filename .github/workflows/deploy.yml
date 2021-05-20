@@ -45,7 +45,7 @@ jobs:
           docker network create marketnet || true
           docker rm -f marketmanagement || true
           docker pull tonydockerchn/market-management:latest
-          docker image prune
+          docker image prune -f
           docker run -d --name marketmanagement -p 8088:80 --network marketnet --network-alias marketmanagement tonydockerchn/market-management
 
         
