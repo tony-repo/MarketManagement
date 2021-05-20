@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MarketManagement.Configuration;
 using MarketManagement.Model;
+using MarketManagement.Model.Request;
 using MarketManagement.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

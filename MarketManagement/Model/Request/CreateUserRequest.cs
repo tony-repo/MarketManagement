@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MarketManagement.Model
+namespace MarketManagement.Model.Request
 {
     public class CreateUserRequest
     {

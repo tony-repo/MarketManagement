@@ -12,9 +12,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using MarketManagement.Configuration;
+using MarketManagement.Model;
+using MarketManagement.Model.AutoMapper;
 using MarketManagement.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace MarketManagement
@@ -73,8 +77,14 @@ namespace MarketManagement
             //        options.Audience = "market";
             //    });
 
+            services.AddDbContext<SqlServerDbContext>(options =>
+            {
+                options.UseSqlServer(_configuration.GetConnectionString("market"));
+            });
+            
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
+            services.AddSingleton<IMapper>(_ => new Mapper(MapperSetup.MapperConfiguration));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

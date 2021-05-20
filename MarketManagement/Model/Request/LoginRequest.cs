@@ -1,4 +1,4 @@
-namespace MarketManagement.Model
+namespace MarketManagement.Model.Request
 {
     public class LoginRequest
     {

@@ -1,9 +1,8 @@
 version: '3.4'
 
 services:
-
-    marketmanagement:
-        image: marketmanagement
+    marketmanagement:        
+        container_name: marketmanagement
         build:
             context: .
             dockerfile: Dockerfile        
@@ -11,16 +10,29 @@ services:
             - 8088:80
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
-    marketsql:
+        networks: 
+            - marketnet
+
+    marketsql:        
+        container_name: marketsql
         image: mcr.microsoft.com/mssql/server:2019-latest
         environment: 
             - ACCEPT_EULA=Y
             - 'SA_PASSWORD=Abcd1234!!!!'
         ports:
-            - 1433:1433
+            - 1433:1433  
+        networks:
+            - marketnet
+        restart: on-failure
             
-    rabbitmq:
+    rabbitmq:       
+        container_name: rabbitmq
         image: rabbitmq:3.8.7-management
         ports: 
             - 15672:15672
             - 5672:5672
+        networks: 
+            - marketnet
+networks:
+    marketnet:
+        external: true

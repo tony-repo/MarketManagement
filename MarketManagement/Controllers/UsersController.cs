@@ -1,17 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using MarketManagement.Configuration;
-using MarketManagement.Model;
-using MarketManagement.Model.Domain;
-using MarketManagement.Model.Dto;
+﻿using MarketManagement.Model.Domain;
+using MarketManagement.Model.Request;
 using MarketManagement.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace MarketManagement.Controllers
 {
@@ -30,20 +26,20 @@ namespace MarketManagement.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("ping")]
-        public async Task<IActionResult> GetPing()
+        [Route("auth/ping")]
+        public async Task<IActionResult> GetAuthPing()
         {
             _logger.LogInformation("Get ping successfully");
-            return Ok("Success");
+            return await Task.FromResult(Ok("auth ping Success"));
         }
 
 
         [HttpGet]
-        [Route("testauth")]
-        public async Task<IActionResult> TestAuth()
+        [Route("ping")]
+        public async Task<IActionResult> GetPing()
         {
             _logger.LogInformation("Get ping successfully");
-            return Ok("Test auth successfully");
+            return await Task.FromResult(Ok("ping successfully"));
         }
 
         [HttpPost]
@@ -57,14 +53,25 @@ namespace MarketManagement.Controllers
             return Ok("Success for login");
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsersInfo()
+        {
+            var usersInfo = await _usersService.GetUsersInfo();
+
+            return Ok(usersInfo);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserRequest createUserRequest)
         {
-            var user = new User();
-            user.FirstName = createUserRequest.FirstName;
-            user.LastName = createUserRequest.LastName;
-            user.Email = createUserRequest.Email;
-            user.OrganizationId = createUserRequest.OrganizationId;
+            var user = new User
+            {
+                FirstName = createUserRequest.FirstName,
+                LastName = createUserRequest.LastName,
+                Email = createUserRequest.Email,
+                OrganizationId = createUserRequest.OrganizationId
+            };
 
             await _usersService.CreateUser(user);
 
