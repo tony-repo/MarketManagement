@@ -17,11 +17,11 @@ namespace MarketManagement.Service
 
     public class UsersService : IUsersService
     {
-        private readonly SqlServerDbContext _dbContext;
+        private readonly MySqlDbContext _dbContext;
 
         private readonly IMapper _mapper;
 
-        public UsersService(SqlServerDbContext dbContext, IMapper mapper)
+        public UsersService(MySqlDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -34,9 +34,17 @@ namespace MarketManagement.Service
 
         public async Task<IEnumerable<User>> GetUsersInfo()
         {
-            var userEntities = await _dbContext.Users.ToListAsync();
-            var test = _mapper.Map<User>(userEntities.FirstOrDefault());
-            return userEntities?.Select(entity => _mapper.Map<User>(entity));
+            try
+            {
+                var userEntities = await _dbContext.Users.ToListAsync();
+                var test = _mapper.Map<User>(userEntities.FirstOrDefault());
+                return userEntities?.Select(entity => _mapper.Map<User>(entity));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

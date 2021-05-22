@@ -77,11 +77,19 @@ namespace MarketManagement
             //        options.Audience = "market";
             //    });
 
-            services.AddDbContext<SqlServerDbContext>(options =>
+            //services.AddDbContext<SqlServerDbContext>(options =>
+            //{
+            //    options.UseSqlServer(_configuration.GetConnectionString("market"));
+                
+            //});
+
+            services.AddDbContext<MySqlDbContext>(options =>
             {
-                options.UseSqlServer(_configuration.GetConnectionString("market"));
+                options.UseMySQL(_configuration.GetConnectionString("market"));
+                
             });
-            
+
+
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
             services.AddSingleton<IMapper>(_ => new Mapper(MapperSetup.MapperConfiguration));

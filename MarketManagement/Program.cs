@@ -35,7 +35,7 @@ namespace MarketManagement
             var services = scope.ServiceProvider;
             try
             {
-                var context = services.GetRequiredService<SqlServerDbContext>();
+                var context = services.GetRequiredService<MySqlDbContext>();
                 DbInitializer.Initialize(context);
             }
             catch (Exception ex)

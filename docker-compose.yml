@@ -13,17 +13,22 @@ services:
         networks: 
             - marketnet
 
-    marketsql:        
-        container_name: marketsql
-        image: mcr.microsoft.com/mssql/server:2019-latest
-        environment: 
-            - ACCEPT_EULA=Y
-            - 'SA_PASSWORD=Abcd1234!!!!'
+    marketsql:
+        
+        image: mysql:latest
+        volumes:
+            - ./mydir:/mydir
+            - ./datadir:/var/lib/mysql
+            - ./conf/my.cnf:/etc/my.cnf
+            # restore database file
+            - /docker/mysql/source:/docker-entrypoint-initdb.d
+        environment:
+            - "MYSQL_ROOT_PASSWORD=Abcd1234!!!!"                 
         ports:
-            - 1433:1433  
-        networks:
-            - marketnet
+            - 3306:3306
         restart: on-failure
+        networks: 
+            - marketnet
             
     rabbitmq:       
         container_name: rabbitmq
@@ -33,6 +38,7 @@ services:
             - 5672:5672
         networks: 
             - marketnet
+
 networks:
     marketnet:
         external: true

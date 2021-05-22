@@ -8,7 +8,7 @@ namespace MarketManagement.Model
 {
     public static class DbInitializer
     {
-        public static void Initialize(SqlServerDbContext context)
+        public static void Initialize(MySqlDbContext context)
         {
             context.Database.EnsureCreated(); // make the database is created. 
 
