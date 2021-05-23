@@ -1,20 +1,10 @@
 version: '3.4'
 
 services:
-    marketmanagement:        
-        container_name: marketmanagement
-        build:
-            context: .
-            dockerfile: Dockerfile        
-        ports:
-            - 8088:80
-        environment:
-            - ASPNETCORE_ENVIRONMENT=Development
-        networks: 
-            - marketnet
+  
 
     marketsql:
-        
+        container_name: marketsql
         image: mysql:latest
         volumes:
             - ./mydir:/mydir
@@ -39,6 +29,19 @@ services:
         networks: 
             - marketnet
 
+    marketmanagement:        
+        container_name: marketmanagement
+        build:
+            context: .
+            dockerfile: Dockerfile        
+        ports:
+            - 8088:80
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+        networks: 
+            - marketnet         
+        depends_on:
+            - marketsql
 networks:
     marketnet:
         external: true

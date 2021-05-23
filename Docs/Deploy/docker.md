@@ -1,14 +1,15 @@
 # Issues when deploy project
 
-1. Installing vim in docker container
+1. Installing common tools in docker container
 
-    * Using below commands to install vim
+    * Using below commands to install common tools
 
     ``` bash
     #!/bin/bash
         docker exec -it [containerId]
         apt-get update
         apt-get install vim
+        apt-get install inetutils-ping
 
     ```
 
@@ -27,7 +28,8 @@
    ```
 
 3. Docker connect with each containers
-  a: link: this way should creatre container in order
+
+    a: link: this way should creatre container in order
 
     ``` docker
 
@@ -38,13 +40,45 @@
 
     ```
 
-  b: bridge network
+    b: bridge network
 
-  ``` docker
+    ``` docker
 
-      1. docker network create testnet
-      2. docker run -it --name <container> ---network <bridge> --network-alias <alias> <image name>
-      For example:
-        docker run -it --name market --network testnet --network-alias market sqlserver:latest
-        docker run -it --name marketmanagement--network testnet --network-alias marketmanagement marketmanagement:latest 
-  ```
+        1. docker network create testnet
+        2. docker run -it --name <container> ---network <bridge> --network-alias <alias> <image name>
+        For example:
+          docker run -it --name market --network testnet --network-alias market sqlserver:latest
+          docker run -it --name marketmanagement--network testnet --network-alias marketmanagement marketmanagement:latest 
+    ```
+
+4. MarketMnagement server can not connect to mysql
+
+    a: using below command to open mysql container
+
+      ``` bash
+        docker exec -it [container name] /bin/bash
+      ```
+
+    b: login to the mysql;
+
+      ``` bash
+        mysql -h localhost -u root -p
+      ```
+
+    c: change caching_sha2_password to mysql_native_password
+
+      ``` bash
+        user mysql;
+        mysql> ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+        Query OK, 0 rows affected (0.00 sec)
+
+        mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+        Query OK, 0 rows affected (0.01 sec)  
+      ```
+
+    d: check status
+
+      ``` bash
+         FLUSH PRIVILEGES;
+         SELECT Host, User, plugin from user;
+      ```
