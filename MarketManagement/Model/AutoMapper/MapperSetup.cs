@@ -10,12 +10,15 @@ namespace MarketManagement.Model.AutoMapper
 {
     public static class MapperSetup
     {
-        public  static MapperConfiguration MapperConfiguration => new MapperConfiguration(
+        public static MapperConfiguration MapperConfiguration => new MapperConfiguration(
             cfg =>
             {
                 //cfg.AddProfile(EntiyToDomainProfile);
                 //cfg.AddProfile(DomainToDtoProfile);
-                cfg.CreateMap<UserEntity, User>();
+                cfg.CreateMap<UserEntity, User>()
+                    .ForMember(e => e.OrganizationId, o => o.Ignore());
+                cfg.CreateMap<User, UserEntity>()
+                    .ForMember(e => e.OrganizationId, o => o.Ignore());
             }
             );
     }

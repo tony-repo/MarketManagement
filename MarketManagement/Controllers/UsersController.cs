@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace MarketManagement.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -24,36 +25,6 @@ namespace MarketManagement.Controllers
             _logger = logger;
         }
 
-        [Authorize]
-        [HttpGet]
-        [Route("auth/ping")]
-        public async Task<IActionResult> GetAuthPing()
-        {
-            _logger.LogInformation("Get ping successfully");
-            return await Task.FromResult(Ok("auth ping Success"));
-        }
-
-
-        [HttpGet]
-        [Route("ping")]
-        public async Task<IActionResult> GetPing()
-        {
-            _logger.LogInformation("Get ping successfully");
-            return await Task.FromResult(Ok("ping successfully"));
-        }
-
-        [HttpPost]
-        [Route("login")]
-        public async Task<IActionResult> Login(LoginRequest loginRequest)
-        {
-            _logger.LogInformation("Log in market management");
-
-            var data = loginRequest;
-
-            return Ok("Success for login");
-        }
-
-
         [HttpGet]
         public async Task<IActionResult> GetUsersInfo()
         {
@@ -62,6 +33,7 @@ namespace MarketManagement.Controllers
             return Ok(usersInfo);
         }
 
+        
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserRequest createUserRequest)
         {
@@ -69,8 +41,9 @@ namespace MarketManagement.Controllers
             {
                 FirstName = createUserRequest.FirstName,
                 LastName = createUserRequest.LastName,
-                Email = createUserRequest.Email,
-                OrganizationId = createUserRequest.OrganizationId
+                UserName = createUserRequest.UserName,
+                OrganizationId = createUserRequest.OrganizationId,
+                Password = createUserRequest.Password
             };
 
             await _usersService.CreateUser(user);

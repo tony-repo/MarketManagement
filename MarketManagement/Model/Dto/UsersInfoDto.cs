@@ -11,9 +11,7 @@ namespace MarketManagement.Model.Dto
 
         public DateTime CreatedDate { get; set; }
 
-        public string CompanyName { get; set; }
-
-        public string CompanyAddress { get; set; }
+        public string OrganizationName { get; set; }
 
         public string Comment { get; set; }
     }

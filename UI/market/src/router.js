@@ -8,7 +8,7 @@ import UserManagement from "./components/UserManagement.vue";
 import OrderManagement from "./components/OrderManagement.vue";
 import Settings from "./components/Settings";
 import AccountManagement from "./components/AccountManagement";
-
+import SignUp from "./components/Auth/SignUp"
 
 // 要告诉 vue 使用 vueRouter
 Vue.use(VueRouter);
@@ -16,6 +16,7 @@ Vue.use(VueRouter);
 const routes = [
     { path: '/', redirect: 'login/Jwt Login' },
     { path: '/login/:title', name: 'login', component: Login },
+    { path: '/signup', name: 'signUp', component: SignUp },
     {
         name: 'MarketManagement',
         path: '/MarketManagement',

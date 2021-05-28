@@ -1,22 +1,42 @@
 <template>
   <div>
     <div class="header">
-      <img src="../assets/logo.png" class="logo" alt="logo" />
+      <img src="../../assets/logo.png" class="logo" alt="logo" />
     </div>
-    <div class="login">
+    <div class="signup">
       <el-card>
-        <h2>{{ $route.params.title }}</h2>
         <el-form
-          class="login-form"
+          class="signup-form"
           :model="model"
           :rules="rules"
           ref="form"
-          @submit.native.prevent="login"
+          @submit.native.prevent="signup"
         >
+          <el-form-item prop="firstName">
+            <el-input
+              v-model="model.firstName"
+              placeholder="First Name"
+              prefix-icon="fas fa-lock"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="lastName">
+            <el-input
+              v-model="model.lastName"
+              placeholder="Last Name"
+              prefix-icon="fas fa-lock"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="organizationName">
+            <el-input
+              v-model="model.organizationName"
+              placeholder="Organization Name"
+              prefix-icon="fas fa-lock"
+            ></el-input>
+          </el-form-item>
           <el-form-item prop="username">
             <el-input
               v-model="model.username"
-              placeholder="Email or phone"
+              placeholder="Email or Phone"
               prefix-icon="fas fa-user"
             ></el-input>
           </el-form-item>
@@ -31,15 +51,15 @@
           <el-form-item>
             <el-button
               :loading="loading"
-              class="login-button"
+              class="signup-button"
               type="primary"
               native-type="submit"
               block
-              >Login</el-button
+              >Sign Up</el-button
             >
           </el-form-item>
           <el-form-item>
-            <router-link :to="{ path: '/signup' }">Sign up</router-link>
+            <router-link :to="{ path: '/Login/Jwt Login' }">Login</router-link>
           </el-form-item>
         </el-form>
       </el-card>
@@ -52,7 +72,7 @@
 
 <script>
 export default {
-  name: "login",
+  name: "signUp",
   data() {
     return {
       validCredentials: {
@@ -62,6 +82,9 @@ export default {
       model: {
         username: "",
         password: "",
+        firstName: "",
+        lastName: "",
+        organizationName: "",
       },
       loading: false,
       rules: {
@@ -89,43 +112,32 @@ export default {
     };
   },
   methods: {
-    async loginMarketByJwt() {
-      try {
-        var response = await this.$axios.post("/Authentication/token", {
-          username: this.model.username,
-          password: this.model.password,
-        });
-
-        // save authentication token
-        this.$store.commit("set_token", response.data.jwtToken);
-
-        this.$router.push({
-          path: "/MarketManagement",
-          data: {
-            status: "success",
-          },
-        });
-      } catch (error) {
-        this.$message.error(error);
-      }
-    },
-    async loginMarketByOauth() {
-      console.log("Oauth login");
-    },
-    async login() {
+    async signup() {
       let valid = await this.$refs.form.validate();
       if (!valid) {
         return;
       }
+      try {
+        var response = await this.$axios.post("/Authentication/signUp", {
+          username: this.model.username,
+          password: this.model.password,
+          firstName: this.model.firstName,
+          lastName: this.model.lastName,
+          organizationName: this.model.organizationName,
+        });
 
-      if (this.$route.params.title === "Jwt Login") {
-        this.loading = true;
-        await this.loginMarketByJwt();
-        this.loading = false;
-      } else if (this.$route.params.title === "Oauth Login") {
-        this.loading = true;
-        await this.loginMarketByOauth();
-        this.loading = false;
+        if (response.status == 200) {
+          this.$router.push({
+            path: "/Login/Jwt Login",
+            data: {
+              status: "success",
+            },
+          });
+        } else {
+          this.$message.error("Sign up failed");
+        }
+      } catch (error) {
+        this.$message.error(error);
       }
     },
   },
@@ -134,18 +146,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.login {
+.signup {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.login-button {
+.signup-button {
   width: 100%;
   margin-top: 40px;
 }
-.login-form {
+.signup-form {
   width: 290px;
 }
 .forgot-password {
@@ -165,10 +177,10 @@ $teal: rgb(0, 124, 137);
     border-color: lighten($teal, 7);
   }
 }
-.login .el-input__inner:hover {
+.signup .el-input__inner:hover {
   border-color: $teal;
 }
-.login .el-input__prefix {
+.signup .el-input__prefix {
   background: rgb(238, 237, 234);
   left: 0;
   height: calc(100% - 2px);
@@ -179,10 +191,10 @@ $teal: rgb(0, 124, 137);
     width: 30px;
   }
 }
-.login .el-input input {
+.signup .el-input input {
   padding-left: 35px;
 }
-.login .el-card {
+.signup .el-card {
   padding-top: 0;
   padding-bottom: 30px;
 }
@@ -201,7 +213,7 @@ a {
     color: lighten($teal, 7);
   }
 }
-.login .el-card {
+.signup .el-card {
   width: 340px;
   display: flex;
   justify-content: center;

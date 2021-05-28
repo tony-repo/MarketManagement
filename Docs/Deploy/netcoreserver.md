@@ -1,4 +1,6 @@
-# Implement Jwt validation in .Net core
+
+Implement Jwt validation in .Net core
+===============================================================
 
 Note: we need to add below libraries firstly
 
@@ -110,4 +112,20 @@ Note: we need to add below libraries firstly
         });
 
     });
+```
+
+Enable migrations for project
+================================================
+
+1. Install Microsoft.EntityFrameworkCore.Tools to project
+
+2. Go to Tools -> Nuget Package Manager -> Package Manage Console
+
+3. Use below command to run migrations
+
+``` bash
+
+    Enable-Migrations
+    add-Migration modelupdate_2021_05_25 -Context MySqlDbContext
+
 ```

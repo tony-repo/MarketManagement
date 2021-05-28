@@ -42,7 +42,7 @@ namespace MarketManagement.Service
             var jwtToken = new JwtSecurityToken(_jwtSettingOptions.Issuer, _jwtSettingOptions.Audience, claims, expires: DateTime.UtcNow.AddMinutes(_jwtSettingOptions.AccessExpiration), signingCredentials: credentials);
 
             var token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
-            return token;
+            return await Task.FromResult(token);
         }
 
         public async Task<object> Create(User user)
@@ -60,7 +60,7 @@ namespace MarketManagement.Service
             user.Roles.ForEach(r => role.Append(r.RoleName + ","));
 
             IEnumerable<Claim> claims = new Claim[] {
-                new Claim(ClaimTypes.Email,user.Email),
+                new Claim(ClaimTypes.UserData,user.UserName),
                 new Claim(ClaimTypes.Role,role.ToString().TrimEnd(',')),
                 new Claim(ClaimTypes.Expiration,expiresAt.ToString())
             };
@@ -90,9 +90,7 @@ namespace MarketManagement.Service
                 Success = true
             };
 
-          //  _tokens.Add(jwt);
-
-            return jwt;
+            return await Task.FromResult(jwt);
         }
 
         public Task DeactiveActiveToken()

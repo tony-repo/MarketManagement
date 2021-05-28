@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MarketManagement.Model.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketManagement.Model
 {
@@ -10,7 +11,8 @@ namespace MarketManagement.Model
     {
         public static void Initialize(MySqlDbContext context)
         {
-            context.Database.EnsureCreated(); // make the database is created. 
+            //context.Database.EnsureCreated(); // make the database is created. 
+            context.Database.Migrate();
 
             if (context.Users.Any())
             {
@@ -20,13 +22,13 @@ namespace MarketManagement.Model
             var user = new UserEntity
             {
                 Id = Guid.NewGuid(),
-                Email = "test@qq.com",
+                UserName = "test@qq.com",
                 FirstName = "tony",
                 LastName = "schema",
                 OrganizationId = Guid.Empty,
                 Password = "123143423"
             };
-
+            //
             context.Users.Add(user);
             context.SaveChanges();
         }
