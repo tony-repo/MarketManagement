@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: "User Management",
+  name: "UserManagement",
   data() {
     const item = {
       date: "2016-05-02",

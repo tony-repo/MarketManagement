@@ -100,7 +100,7 @@ export default {
         this.$store.commit("set_token", response.data.jwtToken);
 
         this.$router.push({
-          path: "/MarketManagement",
+          path: "/UserManagement",
           data: {
             status: "success",
           },

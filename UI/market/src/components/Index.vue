@@ -32,6 +32,7 @@
           background-color="#444B65"
           text-color="#FFFFFF"
           style="height: 800px"
+          mode="vertical"
         >
           <el-menu-item index="/UserManagement">
             <i class="el-icon-user"></i>
@@ -60,9 +61,12 @@
         <el-button @click="fold" style="width: 36px; height: 36px">
           <i class="el-icon-s-fold" style="margin-left: -8px"></i>
         </el-button>
-        <el-main>
-          <router-view></router-view>
-        </el-main>
+        <div style="padding: 30px">
+          <el-alert :closable="false" title="menu 1">
+            <router-view />
+          </el-alert>
+        </div>
+        <router-view></router-view>
       </el-container>
     </el-container>
   </el-container>

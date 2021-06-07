@@ -11,7 +11,7 @@ namespace MarketManagement.Model
     {
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<OrganizationEntity> Organizations { get; set; }
-        public DbSet<VendorEntity> Vendor { get; set; }
+        public DbSet<VendorEntity> Vendors { get; set; }
 
         public MySqlDbContext(DbContextOptions<MySqlDbContext> options) : base(options)
         {

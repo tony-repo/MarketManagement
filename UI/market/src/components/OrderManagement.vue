@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "Order Management",
+  name: "OrderManagement",
 };
 </script>
 
