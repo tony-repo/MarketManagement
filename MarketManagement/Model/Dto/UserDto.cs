@@ -15,6 +15,8 @@ namespace MarketManagement.Model.Dto
 
         public string Password { get; set; }
 
+        public  string Phone { get; set; }
+
         public string OrganizationName { get; set; }
 
         public Guid OrganizationId { get; set; }

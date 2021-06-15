@@ -1,13 +1,28 @@
 <template>
-  <div>
+  <div v-cloak>
     <el-container style="height: 750px">
       <el-main>
-        <el-table :data="tableData">
-          <el-table-column prop="date" label="日期" width="140">
+        <el-table :data="tableData" v-cloak>
+          <el-table-column prop="firstName" label="First Name" width="120">
           </el-table-column>
-          <el-table-column prop="name" label="姓名" width="120">
+          <el-table-column prop="lastName" label="Last Name" width="120">
           </el-table-column>
-          <el-table-column prop="address" label="地址"> </el-table-column>
+          <el-table-column prop="userName" label="Email" width="120">
+          </el-table-column>
+          <el-table-column prop="phone" label="Phone"> </el-table-column>
+          <el-table-column prop="organizationName" label="Organization">
+          </el-table-column>
+          <el-table-column fixed="right" label="Operations" width="100">
+            <template slot-scope="scope">
+              <el-button
+                @click="handleClick(scope.row)"
+                type="text"
+                size="small"
+                >Edit</el-button
+              >
+              <el-button type="text" size="small">Delete</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </el-main>
       <el-footer>
@@ -32,17 +47,21 @@
 export default {
   name: "UserManagement",
   data() {
-    const item = {
-      date: "2016-05-02",
-      name: "王小虎",
-      address: "上海市普陀区金沙江路 1518 弄",
-    };
     return {
       currentPage: 1,
-      tableData: Array(20).fill(item),
+      tableData: [],
     };
   },
+  computed: {},
+  created: function () {
+    this.loadData();
+  },
   methods: {
+    loadData() {
+      this.$axios.get("Users").then((response) => {
+        this.tableData = response.data;
+      });
+    },
     total() {
       return this.tableData.length;
     },
@@ -58,6 +77,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+[v-cloak] {
+  display: none;
+}
+
 h3 {
   margin: 40px 0 0;
 }

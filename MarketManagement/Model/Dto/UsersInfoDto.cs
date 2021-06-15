@@ -8,11 +8,9 @@ namespace MarketManagement.Model.Dto
     public class UsersInfoDto
     {
         public string Name { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
+        public  string Email { get; set; }
+        public  string Phone { get; set; }
         public string OrganizationName { get; set; }
-
-        public string Comment { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

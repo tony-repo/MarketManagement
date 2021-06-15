@@ -20,6 +20,7 @@ using MarketManagement.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace MarketManagement
 {
@@ -77,18 +78,23 @@ namespace MarketManagement
             //        options.Audience = "market";
             //    });
 
+            // For sql server
             //services.AddDbContext<SqlServerDbContext>(options =>
             //{
             //    options.UseSqlServer(_configuration.GetConnectionString("market"));
-                
+
             //});
 
-            services.AddDbContext<MySqlDbContext>(options =>
+            services.AddDbContextPool<MySqlDbContext>(options =>
             {
-                options.UseMySQL(_configuration.GetConnectionString("market"));
-                
-            });
+                var version = ServerVersion.Parse("8.0.25", ServerType.MySql);
+                string connectionStr = _configuration.GetConnectionString("market");
 
+                options.UseMySql(connectionStr, version, (myOptions) =>
+                {
+
+                });
+            });
 
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IJwtTokenService, JwtTokenService>();

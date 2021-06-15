@@ -15,10 +15,10 @@ namespace MarketManagement.Model.AutoMapper
             {
                 //cfg.AddProfile(EntiyToDomainProfile);
                 //cfg.AddProfile(DomainToDtoProfile);
-                cfg.CreateMap<UserEntity, User>()
-                    .ForMember(e => e.OrganizationId, o => o.Ignore());
-                cfg.CreateMap<User, UserEntity>()
-                    .ForMember(e => e.OrganizationId, o => o.Ignore());
+                cfg.CreateMap<UserEntity, User>();
+                    //.ForMember(e => e.OrganizationId, o => o.Ignore());
+                    cfg.CreateMap<User, UserEntity>();
+                    //.ForMember(e => e.OrganizationId, o => o.Ignore());
             }
             );
     }

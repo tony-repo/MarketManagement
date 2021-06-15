@@ -44,4 +44,4 @@ services:
             - marketsql
 networks:
     marketnet:
-        external: true
+        external: false

@@ -53,7 +53,7 @@ namespace MarketManagement.Controllers
             {
                 FirstName = createUserRequest.FirstName,
                 LastName = createUserRequest.LastName,
-                UserName = createUserRequest.UserName,
+                Email = createUserRequest.Email,
                 OrganizationId = null,
                 OrganizationName = createUserRequest.OrganizationName,
                 Password = createUserRequest.Password
@@ -70,13 +70,13 @@ namespace MarketManagement.Controllers
         {
             var user = new User()
             {
-                UserName = loginRequest.UserName,
+                Email = loginRequest.UserName,
                 Password = loginRequest.Password
             };
 
             if (!await _usersService.IsAuthedUser(user))
             {
-                return Unauthorized("UserName or Password is not correct.");
+                return Unauthorized("Email or Password is not correct.");
             }
 
             var refreshToken = "1123345";

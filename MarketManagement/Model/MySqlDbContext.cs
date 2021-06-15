@@ -32,6 +32,7 @@ namespace MarketManagement.Model
             modelBuilder.Entity<OrganizationEntity>().HasKey(t => t.Id);
             modelBuilder.Entity<VendorEntity>().HasKey(t => t.Id);
 
+
             base.OnModelCreating(modelBuilder);
         }
     }

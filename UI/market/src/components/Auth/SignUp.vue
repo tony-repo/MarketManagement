@@ -36,7 +36,14 @@
           <el-form-item prop="username">
             <el-input
               v-model="model.username"
-              placeholder="Email or Phone"
+              placeholder="Email"
+              prefix-icon="fas fa-user"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="phone">
+            <el-input
+              v-model="model.phone"
+              placeholder="Phone"
               prefix-icon="fas fa-user"
             ></el-input>
           </el-form-item>
@@ -85,6 +92,7 @@ export default {
         firstName: "",
         lastName: "",
         organizationName: "",
+        phone: "",
       },
       loading: false,
       rules: {

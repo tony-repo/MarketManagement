@@ -60,7 +60,7 @@ namespace MarketManagement.Service
             user.Roles.ForEach(r => role.Append(r.RoleName + ","));
 
             IEnumerable<Claim> claims = new Claim[] {
-                new Claim(ClaimTypes.UserData,user.UserName),
+                new Claim(ClaimTypes.UserData,user.Email),
                 new Claim(ClaimTypes.Role,role.ToString().TrimEnd(',')),
                 new Claim(ClaimTypes.Expiration,expiresAt.ToString())
             };

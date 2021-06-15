@@ -82,3 +82,22 @@
          FLUSH PRIVILEGES;
          SELECT Host, User, plugin from user;
       ```
+
+5. Mysql can not migration
+
+    The reason is we use the wrong EF core library:
+
+    `Pomelo.EntityFrameworkCore.MySql` : we need this one
+    `MySql.Data.EntityFrameworkCore` : it does not implement this feature
+
+6. Command for Ef core:
+
+``` bash
+    Add-Migration -c YourDbContext [name]
+    
+    Update-Database
+
+    Update-Database -Migration:0 # detel table schema
+
+    Remove-Migration
+```

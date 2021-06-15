@@ -1,6 +1,7 @@
 using AutoFixture;
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using MarketManagement.Controllers;
 using MarketManagement.Model;
 using MarketManagement.Service;
@@ -21,7 +22,8 @@ namespace Tests.Controllers
         {
             _usersService = Substitute.For<IUsersService>();
             var logger = Substitute.For<ILogger<UsersController>>();
-            _usersController = new UsersController(_usersService, logger);
+            var mapper = Substitute.For<IMapper>();
+            _usersController = new UsersController(_usersService, logger, mapper);
         }
 
         [Fact]

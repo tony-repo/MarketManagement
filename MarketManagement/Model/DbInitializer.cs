@@ -22,13 +22,13 @@ namespace MarketManagement.Model
             var user = new UserEntity
             {
                 Id = Guid.NewGuid(),
-                UserName = "test@qq.com",
+                Email = "test@qq.com",
                 FirstName = "tony",
                 LastName = "schema",
                 OrganizationId = Guid.Empty,
                 Password = "123143423"
             };
-            //
+            
             context.Users.Add(user);
             context.SaveChanges();
         }

@@ -68,8 +68,15 @@ namespace MarketManagement.Service
             try
             {
                 var userEntities = await _dbContext.Users.ToListAsync();
-                var test = _mapper.Map<User>(userEntities.FirstOrDefault());
-                return userEntities?.Select(entity => _mapper.Map<User>(entity));
+                var organizations = await _dbContext.Organizations.ToListAsync();
+                var result = userEntities?.Select(entity => _mapper.Map<User>(entity))
+                     .Select(entity =>
+                     {
+                         entity.OrganizationName =
+                                 organizations.FirstOrDefault(o => o.Id == entity.OrganizationId)?.Name;
+                         return entity;
+                     });
+                return result;
             }
             catch (Exception e)
             {
@@ -81,7 +88,7 @@ namespace MarketManagement.Service
         public async Task<bool> IsAuthedUser(User user)
         {
             var result = await _dbContext.Users.FirstOrDefaultAsync(u =>
-                u.UserName.ToLower() == user.UserName.ToLower() && u.Password == user.Password);
+                u.Email.ToLower() == user.Email.ToLower() && u.Password == user.Password);
             if (result == null)
             {
                 return false;

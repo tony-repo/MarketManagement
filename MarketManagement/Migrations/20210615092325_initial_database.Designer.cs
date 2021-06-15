@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketManagement.Migrations
 {
     [DbContext(typeof(MySqlDbContext))]
-    [Migration("20210525090051_updatemodule")]
-    partial class updatemodule
+    [Migration("20210615092325_initial_database")]
+    partial class initial_database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,15 +21,15 @@ namespace MarketManagement.Migrations
 
             modelBuilder.Entity("MarketManagement.Model.Entities.OrganizationEntity", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Address")
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -38,25 +38,27 @@ namespace MarketManagement.Migrations
 
             modelBuilder.Entity("MarketManagement.Model.Entities.UserEntity", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
-                    b.Property<byte[]>("OrganizationId")
-                        .IsRequired()
-                        .HasColumnType("varbinary(16)");
+                    b.Property<Guid>("OrganizationId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Password")
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
+                    b.Property<string>("Phone")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -65,19 +67,19 @@ namespace MarketManagement.Migrations
 
             modelBuilder.Entity("MarketManagement.Model.Entities.VendorEntity", b =>
                 {
-                    b.Property<byte[]>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Address")
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vendor");
+                    b.ToTable("Vendors");
                 });
 #pragma warning restore 612, 618
         }
