@@ -131,6 +131,8 @@ export default {
           password: this.model.password,
           firstName: this.model.firstName,
           lastName: this.model.lastName,
+          email: this.model.email,
+          phone: this.model.phone,
           organizationName: this.model.organizationName,
         });
 
