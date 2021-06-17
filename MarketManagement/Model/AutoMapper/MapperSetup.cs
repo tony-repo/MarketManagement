@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MarketManagement.Model.Domain;
+using MarketManagement.Model.Dto;
 using MarketManagement.Model.Entities;
 
 namespace MarketManagement.Model.AutoMapper
@@ -16,9 +17,12 @@ namespace MarketManagement.Model.AutoMapper
                 //cfg.AddProfile(EntiyToDomainProfile);
                 //cfg.AddProfile(DomainToDtoProfile);
                 cfg.CreateMap<UserEntity, User>();
-                    //.ForMember(e => e.OrganizationId, o => o.Ignore());
-                    cfg.CreateMap<User, UserEntity>();
-                    //.ForMember(e => e.OrganizationId, o => o.Ignore());
+                //.ForMember(e => e.OrganizationId, o => o.Ignore());
+                cfg.CreateMap<User, UserEntity>();
+                //.ForMember(e => e.OrganizationId, o => o.Ignore());
+
+                cfg.CreateMap<UserDto,User>();
+                cfg.CreateMap<User, UserDto>();
             }
             );
     }

@@ -33,9 +33,9 @@
               prefix-icon="fas fa-lock"
             ></el-input>
           </el-form-item>
-          <el-form-item prop="username">
+          <el-form-item prop="email">
             <el-input
-              v-model="model.username"
+              v-model="model.email"
               placeholder="Email"
               prefix-icon="fas fa-user"
             ></el-input>
@@ -87,7 +87,7 @@ export default {
         password: "lightscope",
       },
       model: {
-        username: "",
+        email: "",
         password: "",
         firstName: "",
         lastName: "",
@@ -131,7 +131,7 @@ export default {
           firstName: this.model.firstName,
           lastName: this.model.lastName,
           email: this.model.email,
-          phone: this.model.username,
+          phone: this.model.phone,
           organizationName: this.model.organizationName,
         });
 

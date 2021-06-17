@@ -60,8 +60,8 @@ export default {
         password: "lightscope",
       },
       model: {
-        username: "tony@test.com",
-        password: "123456",
+        username: "",
+        password: "",
       },
       loading: false,
       rules: {
