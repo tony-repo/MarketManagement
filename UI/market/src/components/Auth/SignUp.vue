@@ -127,12 +127,11 @@ export default {
       }
       try {
         var response = await this.$axios.post("/Authentication/signUp", {
-          username: this.model.username,
           password: this.model.password,
           firstName: this.model.firstName,
           lastName: this.model.lastName,
           email: this.model.email,
-          phone: this.model.phone,
+          phone: this.model.username,
           organizationName: this.model.organizationName,
         });
 

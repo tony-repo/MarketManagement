@@ -54,6 +54,7 @@ namespace MarketManagement.Controllers
                 FirstName = createUserRequest.FirstName,
                 LastName = createUserRequest.LastName,
                 Email = createUserRequest.Email,
+                Phone = createUserRequest.Phone,
                 OrganizationId = null,
                 OrganizationName = createUserRequest.OrganizationName,
                 Password = createUserRequest.Password
